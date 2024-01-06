@@ -1,4 +1,6 @@
-import { connection } from './database'
-import { app } from './api'
+import { sync } from './logic/models/record/sync'
 
-export { connection, app }
+export { connection } from './database'
+export { app } from './api'
+
+sync()
