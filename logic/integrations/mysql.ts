@@ -15,9 +15,7 @@ export function getTransactions(startingHash: string, callback: (data: any[]) =>
     const query = `SELECT * FROM wp_cp_order_transaction
         WHERE id >= (
             SELECT id + 1 FROM wp_cp_order_transaction WHERE hash = '${startingHash}'
-        )
-        
-        `
+        )`
 
     connection.query(query, (err, results) => {
         if (err) {
@@ -29,10 +27,7 @@ export function getTransactions(startingHash: string, callback: (data: any[]) =>
                 sender: JSON.parse(result.addresses)?.sender || null
             }))
 
-            console.log('Query executed successfully! ✅')
             callback(data)
         }
     })
 }
-
-// Example usage
