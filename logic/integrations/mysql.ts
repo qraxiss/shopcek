@@ -11,15 +11,28 @@ connection.connect((err) => {
     }
 })
 
-export function getTransactions(date: string): any {
-    const query = `SELECT * FROM wp_cp_order_transaction WHERE createdAt > '${date}'`
+export function getTransactions(startingHash: string, callback: (data: any[]) => void) {
+    const query = `SELECT * FROM wp_cp_order_transaction
+        WHERE id >= (
+            SELECT id + 1 FROM wp_cp_order_transaction WHERE hash = '${startingHash}'
+        )
+        
+        `
 
     connection.query(query, (err, results) => {
         if (err) {
             console.error('Error executing query:', err)
-            return []
+            callback([])
         } else {
-            return results
+            const data = results.map((result: any) => ({
+                hash: result.hash,
+                sender: JSON.parse(result.addresses)?.sender || null
+            }))
+
+            console.log('Query executed successfully! ✅')
+            callback(data)
         }
     })
 }
+
+// Example usage
