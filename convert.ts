@@ -4,6 +4,10 @@ const data = [
     {
         schemaDirectory: './logic/validators/user',
         typeOutputDirectory: './logic/types/user'
+    },
+    {
+        schemaDirectory: './logic/validators/record',
+        typeOutputDirectory: './logic/types/record'
     }
 ]
 
