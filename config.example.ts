@@ -10,6 +10,12 @@ type configType = {
     MODULE_KEY: string
     SESSION_SECRET: string
     ENV: string
+    REMOTE_MYSQL: {
+        host: string
+        user: string
+        password: string
+        database: string
+    }
 }
 
 const configSchema = Joi.object({
@@ -18,7 +24,13 @@ const configSchema = Joi.object({
     MODULE_NAME: Joi.string().required(),
     MODULE_KEY: Joi.string().required(),
     SESSION_SECRET: Joi.string().required(),
-    ENV: Joi.string().valid('development', 'production').required()
+    ENV: Joi.string().valid('development', 'production').required(),
+    REMOTE_MYSQL: Joi.object({
+        host: Joi.string().required(),
+        user: Joi.string().required(),
+        password: Joi.string().required(),
+        database: Joi.string().required()
+    }).required()
 })
 
 export var config: configType = validate(
@@ -28,7 +40,13 @@ export var config: configType = validate(
         MODULE_KEY: '123',
         MODULE_NAME: name,
         SESSION_SECRET: '123',
-        ENV: 'development'
+        ENV: 'development',
+        REMOTE_MYSQL: {
+            host: '',
+            user: '',
+            password: '',
+            database: ''
+        }
     },
     configSchema
 )
