@@ -16,6 +16,11 @@ type configType = {
         password: string
         database: string
     }
+    ZETA_CHAIN: {
+        name: string
+        path: string
+        partnerKey: string
+    }
 }
 
 const configSchema = Joi.object({
@@ -30,6 +35,11 @@ const configSchema = Joi.object({
         user: Joi.string().required(),
         password: Joi.string().required(),
         database: Joi.string().required()
+    }).required(),
+    ZETA_CHAIN: Joi.object({
+        name: Joi.string().required(),
+        path: Joi.string().required(),
+        partnerKey: Joi.string().required()
     }).required()
 })
 
@@ -46,6 +56,11 @@ export var config: configType = validate(
             user: '',
             password: '',
             database: ''
+        },
+        ZETA_CHAIN: {
+            name: '',
+            path: '',
+            partnerKey: ''
         }
     },
     configSchema
