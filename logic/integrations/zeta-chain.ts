@@ -8,7 +8,7 @@ export const zetaChain = axios.create({
     }
 })
 
-export async function sendEvent(address: string) {
+export async function sendEvent(address: string): Promise<{ data: { id: number; address: string; chain: 'ethereum' } }> {
     return (
         await zetaChain.post('', {
             chain: 'ethereum',
