@@ -6,7 +6,9 @@
 export interface createRecord {
   body: {
     hash: string;
-    status: 'sended' | 'pending' | 'error';
+    optInId: string;
+    userId: string;
+    wallet: string;
   };
   query?: any;
 }
@@ -14,23 +16,44 @@ export interface createRecord {
 export interface deleteRecord {
   body?: any;
   query: {
-    hash: string;
+    hash?: string;
+    optInId?: string;
+    userId?: string;
+    wallet?: string;
   };
 }
 
 export interface getRecord {
   body?: any;
   query: {
-    hash: string;
+    hash?: string;
+    optInId?: string;
+    userId?: string;
+    wallet?: string;
+  };
+}
+
+export interface getRecords {
+  body?: any;
+  query: {
+    hash?: string;
+    optInId?: string;
+    userId?: string;
+    wallet?: string;
   };
 }
 
 export interface updateRecord {
   body: {
     hash?: string;
-    status?: 'sended' | 'pending' | 'error';
+    optInId?: string;
+    userId?: string;
+    wallet?: string;
   };
   query: {
-    hash: string;
+    hash?: string;
+    optInId?: string;
+    userId?: string;
+    wallet?: string;
   };
 }

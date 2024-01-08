@@ -1,13 +1,17 @@
 import Joi from 'joi'
 
-export const recordRequired = Joi.object({
+export const record = Joi.object({
     hash: Joi.string().required(),
-    status: Joi.string().valid('sended', 'pending', 'error').required()
+    wallet: Joi.string().required(),
+    userId: Joi.string().required(),
+    optInId: Joi.string().required()
 })
 
-export const record = Joi.object({
+export const recordNoRequire = Joi.object({
     hash: Joi.string(),
-    status: Joi.string().valid('sended', 'pending', 'error')
+    wallet: Joi.string(),
+    userId: Joi.string(),
+    optInId: Joi.string()
 })
 
 export const base = Joi.object({

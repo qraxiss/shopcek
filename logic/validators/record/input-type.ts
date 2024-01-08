@@ -1,21 +1,20 @@
-import Joi from 'joi'
-import { record, recordRequired, base } from './common'
+import { record, recordNoRequire, base } from './common'
 
 export const createRecord = base.keys({
-    body: recordRequired.required()
+    body: record.required()
 })
 
 export const updateRecord = base.keys({
-    body: record.required(),
-    query: Joi.object({
-        hash: Joi.string().required()
-    }).required()
+    body: recordNoRequire.required(),
+    query: recordNoRequire.required()
 })
 
-export const getRecord = base.keys({
-    query: Joi.object({
-        hash: Joi.string().required()
-    }).required()
+const onlyQuery = base.keys({
+    query: recordNoRequire.required()
 })
 
-export const deleteRecord = getRecord
+export const getRecord = onlyQuery
+
+export const getRecords = onlyQuery
+
+export const deleteRecord = onlyQuery

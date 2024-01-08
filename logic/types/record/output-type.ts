@@ -5,14 +5,25 @@
 
 export interface createRecord {
   hash: string;
-  status: 'sended' | 'pending' | 'error';
+  optInId: string;
+  userId: string;
+  wallet: string;
 }
 
 export type deleteRecord = boolean;
 
 export interface getRecord {
   hash: string;
-  status: 'sended' | 'pending' | 'error';
+  optInId: string;
+  userId: string;
+  wallet: string;
 }
+
+export type getRecords = {
+  hash: string;
+  optInId: string;
+  userId: string;
+  wallet: string;
+}[];
 
 export type updateRecord = boolean;

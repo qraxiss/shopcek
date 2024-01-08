@@ -9,11 +9,15 @@ export interface base {
 }
 
 export interface record {
-  hash?: string;
-  status?: 'sended' | 'pending' | 'error';
+  hash: string;
+  optInId: string;
+  userId: string;
+  wallet: string;
 }
 
-export interface recordRequired {
-  hash: string;
-  status: 'sended' | 'pending' | 'error';
+export interface recordNoRequire {
+  hash?: string;
+  optInId?: string;
+  userId?: string;
+  wallet?: string;
 }
