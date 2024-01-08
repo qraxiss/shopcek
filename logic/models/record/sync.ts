@@ -1,15 +1,7 @@
 import { mysqlConnection } from '../../integrations/mysql'
-import { sendEvent } from '../../integrations/zeta-chain'
+import { sendEvent, optIn } from '../../integrations/zeta-chain'
 
-import { RecordModel } from '../../../database/models/record'
-
-export async function getLastRecord() {
-    return await RecordModel.findOne().sort({ _id: -1 })
-}
-
-export async function createRecord(hash: string) {
-    return await RecordModel.create({ hash, status: 'sended' })
-}
+import { RecordLogic } from './crud'
 
 export async function sendEvents(events: { hash: string; sender: string }[]) {
     try {
@@ -25,10 +17,19 @@ export async function sendEvents(events: { hash: string; sender: string }[]) {
 
 export async function sendEventWrapper(event: { hash: string; sender: string }) {
     try {
-        let data = await sendEvent(event)
-        console.log(data)
-        if (data.data) {
-            await createRecord(event.hash)
+        let eventData = await sendEvent(event)
+        let optInData = await optIn(JSON.stringify(eventData.data.id), event.sender)
+
+        console.log(eventData)
+        if (eventData.data.id && optInData.data.opted) {
+            await RecordLogic.createRecord({
+                body: {
+                    hash: event.hash,
+                    wallet: event.sender,
+                    userId: JSON.stringify(eventData.data.id),
+                    optInId: JSON.stringify(optInData.data.id)
+                }
+            })
         }
     } catch (error) {
         console.error(error)
@@ -39,7 +40,7 @@ export async function sync() {
     while (true) {
         try {
             let process: boolean = false
-            let lastRecord = await getLastRecord()
+            let lastRecord = await RecordLogic.getLastRecord()
 
             if (lastRecord) {
                 mysqlConnection.getTransactions(lastRecord.hash, async (data) => {
