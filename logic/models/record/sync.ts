@@ -3,7 +3,7 @@ import { sendEvent, optIn } from '../../integrations/zeta-chain'
 
 import { RecordLogic } from './crud'
 
-export async function sendEvents(events: { hash: string; sender: string }[]) {
+export async function sendEvents(events: { hash: string; sender: string; id: number }[]) {
     try {
         await Promise.all(
             events.map(async (event) => {
@@ -15,19 +15,35 @@ export async function sendEvents(events: { hash: string; sender: string }[]) {
     }
 }
 
-export async function sendEventWrapper(event: { hash: string; sender: string }) {
+export async function sendEventWrapper(event: { hash: string; sender: string; id: number }) {
     try {
+        let error = false
+        try {
+            await RecordLogic.getRecord({
+                query: {
+                    hash: event.hash
+                }
+            })
+        } catch (error_) {
+            error = true
+        }
+
+        if (!error) {
+            return
+        }
+
         let eventData = await sendEvent(event)
         let optInData = await optIn(JSON.stringify(eventData.data.id), event.sender)
 
-        console.log(eventData)
+        console.log(new Date(), `-> user: ${eventData.data.id}, opt: ${optInData.data.id}`)
         if (eventData.data.id && optInData.data.opted) {
             await RecordLogic.createRecord({
                 body: {
                     hash: event.hash,
                     wallet: event.sender,
                     userId: JSON.stringify(eventData.data.id),
-                    optInId: JSON.stringify(optInData.data.id)
+                    optInId: JSON.stringify(optInData.data.id),
+                    id: event.id
                 }
             })
         }

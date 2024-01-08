@@ -5,6 +5,7 @@
 
 export interface createRecord {
   hash: string;
+  id: number;
   optInId: string;
   userId: string;
   wallet: string;
@@ -14,6 +15,7 @@ export type deleteRecord = boolean;
 
 export interface getRecord {
   hash: string;
+  id: number;
   optInId: string;
   userId: string;
   wallet: string;
@@ -21,6 +23,7 @@ export interface getRecord {
 
 export type getRecords = {
   hash: string;
+  id: number;
   optInId: string;
   userId: string;
   wallet: string;

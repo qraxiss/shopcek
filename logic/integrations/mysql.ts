@@ -48,10 +48,11 @@ export class MySQLConnection {
             } else {
                 const data = results.map((result: any) => ({
                     hash: result.hash,
-                    sender: JSON.parse(result.addresses)?.sender || null
+                    sender: JSON.parse(result.addresses)?.sender || null,
+                    id: result.id
                 }))
 
-                console.log(new Date(), '->', data.length !== 0 ? data : 'No new transaction found!')
+                console.log(new Date(), '->', data.length !== 0 ? `hash: ${data[0].hash}` : 'No new transaction found!')
                 if (data.length !== 0) {
                     await callback(data)
                 }
@@ -69,7 +70,8 @@ export class MySQLConnection {
             } else {
                 const data = {
                     hash: results[0].hash,
-                    sender: JSON.parse(results[0].addresses)?.sender || null
+                    sender: JSON.parse(results[0].addresses)?.sender || null,
+                    id: results[0].id
                 }
 
                 callback(data)

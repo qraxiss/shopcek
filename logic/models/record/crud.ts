@@ -4,7 +4,7 @@ import * as outputTypes from '../../types/record/output-type'
 import * as inputValidators from '../../validators/record/input-type'
 import * as outputValidators from '../../validators/record/output-type'
 
-import { deleteId, avalidator as wrapper, ErrorHelper } from 'backend-helper-kit'
+import { avalidator as wrapper, ErrorHelper } from 'backend-helper-kit'
 
 import { config } from '../../../config'
 import { RecordModel } from '../../../database/models/record'
@@ -15,7 +15,6 @@ const avalidator = wrapper(inputValidators, outputValidators, config)
 const errorHelper = new ErrorHelper('Record')
 
 export class RecordLogic {
-    @avalidator
     static async createRecord(params: inputTypes.createRecord): Promise<outputTypes.createRecord> {
         let result = await RecordModel.create(params.body)
 
@@ -26,9 +25,7 @@ export class RecordLogic {
         return result.toObject()
     }
 
-    @avalidator
-    @deleteId
-    static async getRecord(params: inputTypes.createRecord): Promise<outputTypes.getRecord> {
+    static async getRecord(params: inputTypes.getRecord): Promise<outputTypes.getRecord> {
         let result = await RecordModel.findOne(params.query)
 
         errorHelper.getError({
@@ -72,6 +69,6 @@ export class RecordLogic {
     }
 
     static async getLastRecord() {
-        return await RecordModel.findOne().sort({ _id: -1 })
+        return await RecordModel.findOne().sort({ id: -1 })
     }
 }

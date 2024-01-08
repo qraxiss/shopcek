@@ -16,6 +16,9 @@ export class Record {
 
     @prop({ required: true, unique: true })
     public optInId!: string
+
+    @prop({ required: true })
+    public id!: number
 }
 
 export const RecordModel = getModelForClass(Record)

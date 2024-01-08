@@ -6,6 +6,7 @@
 export interface createRecord {
   body: {
     hash: string;
+    id: number;
     optInId: string;
     userId: string;
     wallet: string;
@@ -17,6 +18,7 @@ export interface deleteRecord {
   body?: any;
   query: {
     hash?: string;
+    id?: number;
     optInId?: string;
     userId?: string;
     wallet?: string;
@@ -27,6 +29,7 @@ export interface getRecord {
   body?: any;
   query: {
     hash?: string;
+    id?: number;
     optInId?: string;
     userId?: string;
     wallet?: string;
@@ -37,6 +40,7 @@ export interface getRecords {
   body?: any;
   query: {
     hash?: string;
+    id?: number;
     optInId?: string;
     userId?: string;
     wallet?: string;
@@ -46,12 +50,14 @@ export interface getRecords {
 export interface updateRecord {
   body: {
     hash?: string;
+    id?: number;
     optInId?: string;
     userId?: string;
     wallet?: string;
   };
   query: {
     hash?: string;
+    id?: number;
     optInId?: string;
     userId?: string;
     wallet?: string;

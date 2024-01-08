@@ -10,6 +10,7 @@ export interface base {
 
 export interface record {
   hash: string;
+  id: number;
   optInId: string;
   userId: string;
   wallet: string;
@@ -17,6 +18,7 @@ export interface record {
 
 export interface recordNoRequire {
   hash?: string;
+  id?: number;
   optInId?: string;
   userId?: string;
   wallet?: string;
