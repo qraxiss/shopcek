@@ -21,3 +21,25 @@ export async function sendEvent(data: { hash: string; sender: string }): Promise
 
     return response
 }
+
+export async function optIn(userId: string, walletAddress: string) {
+    let response = (
+        await zetaChain.post('/campaigns/opt-in', {
+            userId,
+            addresses: [
+                {
+                    chain: 'ethereum',
+                    address: walletAddress
+                }
+            ]
+        })
+    ).data
+
+    return response
+}
+
+export async function participants(userId: string) {
+    let response = (await zetaChain.get(`/participants/${userId}`)).data
+
+    return response
+}
