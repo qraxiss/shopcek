@@ -31,7 +31,7 @@ export class RecordLogic {
     static async getRecord(params: inputTypes.createRecord): Promise<outputTypes.getRecord> {
         let result = await RecordModel.findOne(params.query)
 
-        errorHelper.createError({
+        errorHelper.getError({
             result
         })
 
@@ -39,10 +39,21 @@ export class RecordLogic {
     }
 
     @avalidator
+    static async getRecords(params: inputTypes.getRecords): Promise<outputTypes.getRecords> {
+        let result = await RecordModel.find(params.query)
+
+        errorHelper.getAllError({
+            result
+        })
+
+        return result.map((item) => item.toObject())
+    }
+
+    @avalidator
     static async updateRecord(params: inputTypes.updateRecord): Promise<outputTypes.updateRecord> {
         let result = await RecordModel.updateOne(params.query, params.body)
 
-        errorHelper.createError({
+        errorHelper.updateError({
             result
         })
 
@@ -53,10 +64,14 @@ export class RecordLogic {
     static async deleteRecord(params: inputTypes.deleteRecord): Promise<outputTypes.deleteRecord> {
         let result = await RecordModel.deleteOne(params.query)
 
-        errorHelper.createError({
+        errorHelper.deleteError({
             result
         })
 
         return !!result
+    }
+
+    static async getLastRecord() {
+        return await RecordModel.findOne().sort({ _id: -1 })
     }
 }
