@@ -2,7 +2,7 @@ import axios from 'axios'
 import { config } from '../../config'
 
 export const zetaChain = axios.create({
-    baseURL: `https://campaign-ts.xdefi.services/api/campaigns/${config.ZETA_CHAIN.path}/events`,
+    baseURL: config.ZETA_CHAIN.baseUrl,
     headers: {
         'Content-Type': 'application/json'
     }
@@ -10,7 +10,7 @@ export const zetaChain = axios.create({
 
 export async function sendEvent(data: { hash: string; sender: string }): Promise<{ data: { id: number; address: string; chain: 'ethereum' } }> {
     let response = (
-        await zetaChain.post('', {
+        await zetaChain.post(`/campaigns/${config.ZETA_CHAIN.path}/events`, {
             chain: 'ethereum',
             address: data.sender,
             partnerName: config.ZETA_CHAIN.name,

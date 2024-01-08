@@ -20,6 +20,7 @@ type configType = {
         name: string
         path: string
         partnerKey: string
+        baseUrl: string
     }
 }
 
@@ -39,7 +40,8 @@ const configSchema = Joi.object({
     ZETA_CHAIN: Joi.object({
         name: Joi.string().required(),
         path: Joi.string().required(),
-        partnerKey: Joi.string().required()
+        partnerKey: Joi.string().required(),
+        baseUrl: Joi.string().required()
     }).required()
 })
 
@@ -60,7 +62,8 @@ export var config: configType = validate(
         ZETA_CHAIN: {
             name: '',
             path: '',
-            partnerKey: ''
+            partnerKey: '',
+            baseUrl: ''
         }
     },
     configSchema
