@@ -1,5 +1,5 @@
 import { mysqlConnection } from '../../integrations/mysql'
-import { sendEvent, optIn } from '../../integrations/zeta-chain'
+import { sendEvent } from '../../integrations/zeta-chain'
 
 import { RecordLogic } from './crud'
 
@@ -33,16 +33,16 @@ export async function sendEventWrapper(event: { hash: string; sender: string; id
         }
 
         let eventData = await sendEvent(event)
-        let optInData = await optIn(JSON.stringify(eventData.data.id), event.sender)
+        // let optInData = await optIn(JSON.stringify(eventData.data.id), event.sender)
 
-        console.log(new Date(), `-> user: ${eventData.data.id}, opt: ${optInData.data.id}`)
-        if (eventData.data.id && optInData.data.opted) {
+        console.log(new Date(), `-> user: ${eventData.data.id}`)
+        if (eventData.data.id) {
             await RecordLogic.createRecord({
                 body: {
                     hash: event.hash,
                     wallet: event.sender,
                     userId: JSON.stringify(eventData.data.id),
-                    optInId: JSON.stringify(optInData.data.id),
+                    optInId: JSON.stringify(eventData.data.id),
                     id: event.id
                 }
             })
