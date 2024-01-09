@@ -21,6 +21,7 @@ type configType = {
         path: string
         partnerKey: string
         baseUrl: string
+        chain: string
     }
 }
 
@@ -41,7 +42,8 @@ const configSchema = Joi.object({
         name: Joi.string().required(),
         path: Joi.string().required(),
         partnerKey: Joi.string().required(),
-        baseUrl: Joi.string().required()
+        baseUrl: Joi.string().required(),
+        chain: Joi.string().required()
     }).required()
 })
 
@@ -63,7 +65,8 @@ export var config: configType = validate(
             name: '',
             path: '',
             partnerKey: '',
-            baseUrl: ''
+            baseUrl: '',
+            chain: ''
         }
     },
     configSchema

@@ -11,7 +11,7 @@ export const zetaChain = axios.create({
 export async function sendEvent(data: { hash: string; sender: string }): Promise<{ data: { id: number; address: string; chain: 'ethereum' } }> {
     let response = (
         await zetaChain.post(`/campaigns/${config.ZETA_CHAIN.path}/events`, {
-            chain: 'ethereum',
+            chain: config.ZETA_CHAIN.chain,
             address: data.sender,
             partnerName: config.ZETA_CHAIN.name,
             partnerKey: config.ZETA_CHAIN.partnerKey,
@@ -28,7 +28,7 @@ export async function optIn(userId: string, walletAddress: string) {
             userId,
             addresses: [
                 {
-                    chain: 'ethereum',
+                    chain: config.ZETA_CHAIN.chain,
                     address: walletAddress
                 }
             ]
