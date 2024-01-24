@@ -2,7 +2,7 @@ import mysql from 'mysql'
 import { config } from '../../config'
 
 export class MySQLConnection {
-    private connection: mysql.Connection
+    public connection: mysql.Connection
     public connected: boolean
 
     constructor() {
