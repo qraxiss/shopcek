@@ -25,6 +25,7 @@
   },
   "scripts": {
     "start": "ts-node index.ts",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "wp-commerce": "ts-node wp-commerce.ts"
   }
 }
